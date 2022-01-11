@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import * as Speech from 'expo-speech';
 import { Header } from 'react-native-elements';
+import { NativeModules } from 'react-native';
+const { Yodo1MASAds } = NativeModules;
 
 export default class App extends React.Component {
   constructor() {
@@ -20,6 +22,9 @@ export default class App extends React.Component {
   render() {
     return (
       <View style = {styles.container}>
+        Yodo1MASAds.initMasSdk()
+        Yodo1MASAds.showBannerAds();
+        Yodo1MASAds.showInterstitialAds();
         <Header
             backgroundColor={'#56A3BF'}
             centerComponent={{
@@ -48,6 +53,7 @@ export default class App extends React.Component {
 
         <TouchableOpacity style = {styles.speechButton}
         onPress = {() => {
+          Yodo1MASAds.showRewardAds();
           this.state.text === '' || this.state.text == ' '
           ? alert("Please type your text to hear the speech.")
           : (this.state.text.indexOf('@') !== -1
@@ -77,7 +83,7 @@ export default class App extends React.Component {
           || this.state.text.indexOf('¥') !== -1
           || this.state.text.indexOf('€') !== -1
           ? alert("Please avoid using special characters.")
-          : this.speak())
+          : this.speak()); 
         }}>
           <Text style = {styles.displayText}>Hear Speech</Text>
         </TouchableOpacity>
